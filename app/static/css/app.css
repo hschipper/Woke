@@ -1,0 +1,41 @@
+
+.vcard  {
+/*  border: 2px solid blue;
+  padding-right: 2px;
+  padding-left: 28px;
+  width: 320px;
+  border-radius: 10px;*/
+}
+/*.member {
+  overflow-y: scroll;
+  padding: 2em;
+  width: 320px;
+}*/
+ul {
+  list-style-type:none;
+}
+.article-card {
+  border: 1px solid #d7d7d7;
+  margin-bottom: 1.5rem;
+  box-shadow: 2px 4px 5px 0px #d7d7d7; 
+}
+.article-card .card-content {
+    background: #fff;
+    margin: 1.25rem;
+}
+
+.article-card .card-content .post-member {
+   text-align: center; 
+}
+h4 {
+  color: #CF000F; 
+}
+
+.article-card p {
+  color: #757D75;
+}
+.article-card h5 {
+  color: lightblue;
+}
+
+

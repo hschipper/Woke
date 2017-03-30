@@ -15,20 +15,24 @@
 
 {% block content %}
 
-<!-- Start Top Bar -->
+<!-- Start Top Bar Thank you Foundation 6 templates
 <div class="top-bar">
   <div class="row">
     <div class="top-bar-left">
       <ul class="dropdown menu" data-dropdown-menu>
-        <li class="menu-text">Woke</li>
+        <li class="menu-text" href={{home}}>Woke</li>
         <li class="has-submenu">
           <a href="#">Login</a>
           <ul class="submenu menu vertical" data-submenu>
-            <li><a href="#">Login</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="logout">Logout</a></li>
+            {% else %}
+            <li><a href="login">Login</a></li>
+            {% endif %}
             <li><a href="#">My Profile</a></li>
           </ul>
         </li>
-        <li><a href="#">Congress Members</a></li>
+        <li><a href={{member_page}}>Congress Members</a></li>
         <li><a href="#">Bills</a></li>
       </ul>
     </div>
@@ -40,7 +44,7 @@
     </div>
   </div>
 </div>
-<!-- End Top Bar -->
+ End Top Bar -->
 
 <div class="row">
   <div class="text-center">
@@ -48,7 +52,7 @@
   </div>
 </div>
 <div class="row">
-  <!--<div class="large-12 columns">-->
+    <!-- creating a column for congress memebers -->
     <div class= "medium-5 small-4 columns">
       <h4> Members </h4>
         <label>
@@ -58,9 +62,12 @@
           <button class="button">Search</button>
 
       <ul>
+        <!-- for all the elements in the query which is currently members that represent california -->
         {% for element in members %}
         <li>
+          <!-- use this for css so they will have boarders -->
           <article class="article-card">
+             <!-- display all the data for each member -->
              <h5 class="post-member">{{element.member}}</h5>
 
               <img class="thumbnail" src="http://placehold.it/200x200">
@@ -73,6 +80,7 @@
         {% endfor %}
      </ul>
     </div>
+    <!-- creating a column for bills -->
     <div class="medium-5 small-4 columns" id="bills">
       <h4> Bills </h4>
         <label>
@@ -81,9 +89,12 @@
         </label>
           <button class="button">Search</button>
       <ul>
+        <!-- for each bill in the query which is currently committee of Natrual Resources -->
         {% for bill in bills %}
         <li>
+          <!-- use this for css so each bill will have a boarder -->
           <article class="article-card">
+            <!-- display all the data for each bill. Not displaying text because its just not practical right now -->
             <h5 class="post-bill">{{ bill.billTitle }}</h5>
             <p>{{bill.billHeading}}</p>
             <p>{{bill.committees}}</p>
@@ -92,94 +103,11 @@
           </article>
         </li>
         {% endfor %}
-<!--    {{ content }} -->
       </ul>
     </div>
-  <!--</div>-->
 </div>
 
-
-
-
-
-<div class="column row">
-      <hr>
-      <ul class="tabs" data-tabs id="tabs">
-        <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Members</a></li>
-        <li class="tabs-title"><a href="#panel2">Bills</a></li>
-      </ul>
-      <div class="tabs-content" data-tabs-content="tabs">
-        <div class="tabs-panel is-active" id="panel1">
-          <h4>Members</h4>
-          <div class="media-object stack-for-small">
-            <div class="media-object-section">
-            {% for element in members %}
-              <img class="thumbnail" src="http://placehold.it/200x200">
-            </div>
-            <div class="media-object-section">
-              <h5>{{ element.member }}</h5>
-              <p>{{element.state}}</p>
-            {% endfor %}
-            </div>
-          </div>
-
-          <div class="media-object stack-for-small">
-            <div class="media-object-section">
-              <img class="thumbnail" src="http://placehold.it/200x200">
-            </div>
-            <div class="media-object-section">
-              <h5>Mike Stevenson</h5>
-              <p>I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you</p>
-            </div>
-          </div>
-          <label>
-            Search
-            <textarea placeholder="Member Name or State"></textarea>
-          </label>
-          <button class="button">Search</button>
-        </div>
-        <div class="tabs-panel" id="panel2">
-          <div class="row medium-up-3 large-up-5">
-            <div class="column">
-              <img class="thumbnail" src="http://placehold.it/350x200">
-              <h5>Other Product <small>$22</small></h5>
-              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
-              <a href="#" class="button hollow tiny expanded">Buy Now</a>
-            </div>
-            <div class="column">
-              <img class="thumbnail" src="http://placehold.it/350x200">
-              <h5>Other Product <small>$22</small></h5>
-              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
-              <a href="#" class="button hollow tiny expanded">Buy Now</a>
-            </div>
-            <div class="column">
-              <img class="thumbnail" src="http://placehold.it/350x200">
-              <h5>Other Product <small>$22</small></h5>
-              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
-              <a href="#" class="button hollow tiny expanded">Buy Now</a>
-            </div>
-            <div class="column">
-              <img class="thumbnail" src="http://placehold.it/350x200">
-              <h5>Other Product <small>$22</small></h5>
-              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
-              <a href="#" class="button hollow tiny expanded">Buy Now</a>
-            </div>
-            <div class="column">
-              <img class="thumbnail" src="http://placehold.it/350x200">
-              <h5>Other Product <small>$22</small></h5>
-              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
-              <a href="#" class="button hollow tiny expanded">Buy Now</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
 {% endblock %}
-
-
-
-
 
 {% block scripts %}
 <script src="{% static "js/vendor/jquery.js" %}"></script>

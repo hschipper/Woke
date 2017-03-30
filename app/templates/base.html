@@ -1,14 +1,60 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
   <head>
   <title>{% block title %}{% endblock %} </title>
   {% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "css/foundation.css" %}">
+    <link rel="stylesheet" href="{% static "css/app.css" %}">
   {% endblock %}
   </head>
   <body>
+    {% block header %}
+    <!-- Start Top Bar Thank you Foundation 6 templates-->
+      <div class="top-bar">
+        <div class="row">
+          <div class="top-bar-left">
+            <ul class="dropdown menu" data-dropdown-menu>
+              <li class="menu-text" href={{home}}>Woke</li>
+              <li class="has-submenu">
+                {% if user.is_authenticated %}
+                <a href="#">My Profile</a>
+                {% else %}
+                <a href="login">Login</a>
+                {% endif %}
+                <ul class="submenu menu vertical" data-submenu>
+                  {% if user.is_authenticated %}
+                  <li><a href="logout">Logout</a></li>
+                  {% else %}
+                  <li><a href="login">Login</a></li>
+                  {% endif %}
+                  <li><a href="#">My Profile</a></li>
+                </ul>
+              </li>
+              <li><a href={{member_page}}>Congress Members</a></li>
+              <li><a href="#">Bills</a></li>
+            </ul>
+          </div>
+           <div class="top-bar-right">
+            <ul class="menu">
+              <li><input type="search" placeholder="zip"></li>
+              <li><button type="button" class="button">Search</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  <!-- End Top Bar -->
+    {% endblock %}
     {% block content %}
     {% endblock %}
-    {% block scripts %}
+    {% block scripts %}    
+    <script src="{% static "js/vendor/jquery.js" %}"></script>
+    <script src="{% static "js/vendor/what-input.js" %}"></script>
+    <script src="{% static "js/vendor/foundation.js" %}"></script>
+    <script src="{% static "js/app.js" %}"></script>
     {% endblock %}
   </body>
 </html>

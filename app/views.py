@@ -29,11 +29,11 @@ def bills(request):
     bills = db.bills.find({'committees':"House - Natural Resources"})
     bill = {}
     bill['bills']= dumps(bills)
-    return JsonResponse(bill)
+    return HttpResponse(bill['bills'])
 
 #API for app
 def members(request):
-    members = db.members.find({'state':"Colorado",'district':"1"})
+    members = db.members.find({'state':"Colorado"})
     member = {}
     member['members']=dumps(members)
     return HttpResponse(member['members'])
@@ -72,10 +72,7 @@ def register(request):
 
 #second page to display members different.
 def member_page(request):
-    context= {
-        'title':"Members",
-        'members':db.members.find({'member':"Representative LaMalfa, Doug"}),
-        'bills':db.bills.find({'committees':"House - Natural Resources"}),
-        'home':"/",
-    }
-    return render(request,'member_page.html',context)
+    members = db.members.find({'state':request.GET['state']})
+    member = {}
+    member['members']=dumps(members)
+    return HttpResponse(member['members'])

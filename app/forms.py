@@ -35,3 +35,11 @@ class LoginForm(AuthenticationForm):
         max_length=32,
         widget=forms.PasswordInput()
     )
+
+class MemberSearch(forms.Form):
+    memberSearch = forms.CharField(
+        label='State',
+        max_length=30,
+        widget=forms.TextInput({
+            'placeholder': 'Texas'
+            }))

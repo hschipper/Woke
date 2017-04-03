@@ -15,36 +15,6 @@
 
 {% block content %}
 
-<!-- Start Top Bar Thank you Foundation 6 templates
-<div class="top-bar">
-  <div class="row">
-    <div class="top-bar-left">
-      <ul class="dropdown menu" data-dropdown-menu>
-        <li class="menu-text" href={{home}}>Woke</li>
-        <li class="has-submenu">
-          <a href="#">Login</a>
-          <ul class="submenu menu vertical" data-submenu>
-            {% if user.is_authenticated %}
-            <li><a href="logout">Logout</a></li>
-            {% else %}
-            <li><a href="login">Login</a></li>
-            {% endif %}
-            <li><a href="#">My Profile</a></li>
-          </ul>
-        </li>
-        <li><a href={{member_page}}>Congress Members</a></li>
-        <li><a href="#">Bills</a></li>
-      </ul>
-    </div>
-    <div class="top-bar-right">
-      <ul class="menu">
-        <li><input type="search" placeholder="zip"></li>
-        <li><button type="button" class="button">Search</button></li>
-      </ul>
-    </div>
-  </div>
-</div>
- End Top Bar -->
 
 <div class="row">
   <div class="text-center">
@@ -55,12 +25,15 @@
     <!-- creating a column for congress memebers -->
     <div class= "medium-5 small-4 columns">
       <h4> Members </h4>
-        <label>
-        Search
-        <textarea placeholder="Member Name"></textarea>
-        </label>
-          <button class="button">Search</button>
-
+         <form action"" method="post">
+         {% csrf_token %}
+         <div>
+            {{ form.errors }}
+            {{ form.memberSearch.label }}
+            {{ form.memberSearch }}
+         </div>
+          <input type="submit" value="Search" class="button">
+         </form>
       <ul>
         <!-- for all the elements in the query which is currently members that represent california -->
         {% for element in members %}
@@ -68,13 +41,25 @@
           <!-- use this for css so they will have boarders -->
           <article class="article-card">
              <!-- display all the data for each member -->
-             <h5 class="post-member">{{element.member}}</h5>
-
-              <img class="thumbnail" src="http://placehold.it/200x200">
-             <p>{{element.state}}</p>
-             <p>{{element.party}}</p>
-             <p>{{element.served}}</p>
-             <p>{{element.district}}</p>
+             {% for name in element.member %}
+             <h5 class="post-member">{{name}}</h5>
+             {% endfor %}
+<!--"http://placehold.it/200x200"--> 
+              {% for suburl in  element.url  %}
+              <img class="thumbnail" id="memberImage" src="https://www.congress.gov{{suburl}}">
+              {% endfor %} 
+             {% for state in element.state %}
+             <p>{{state}}</p>
+             {% endfor %}
+             {% for party in element.party %}
+             <p>{{party}}</p>
+             {% endfor %}
+             {% for served in element.served %}
+             <p>{{served}}</p>
+             {% endfor %}
+             {% for district in element.district %}
+             <p>{{district}}</p>
+             {% endfor %}
           </article>
         </li>
         {% endfor %}
@@ -95,11 +80,21 @@
           <!-- use this for css so each bill will have a boarder -->
           <article class="article-card">
             <!-- display all the data for each bill. Not displaying text because its just not practical right now -->
-            <h5 class="post-bill">{{ bill.billTitle }}</h5>
-            <p>{{bill.billHeading}}</p>
-            <p>{{bill.committees}}</p>
-            <p>{{bill.sponser}}</p>
-            <p>{{bill.latestAction}}</p>
+            {% for title in bill.billTitle %}
+            <h5 class="post-bill">{{ title }}</h5>
+            {% endfor %}
+            {% for heading in bill.billHeading %}
+            <p>{{heading}}</p>
+            {% endfor %}
+            {% for committee in bill.committees %}
+            <p>{{committee}}</p>
+            {% endfor %}
+            {% for sponser in bill.sponser %}
+            <p>{{sponser}}</p>
+            {% endfor %}
+            {% for action in bill.latestAction %}
+            <p>{{action}}</p>
+            {% endfor %}
           </article>
         </li>
         {% endfor %}

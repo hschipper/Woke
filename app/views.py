@@ -15,10 +15,25 @@ db = client.congress
 
 #main home page
 def index(request):
+    if request.method == 'POST':
+        form = MemberSearch(request.POST)
+        if form.is_valid():
+#            zipcode = request.POST.get('search', None)
+            search = form.cleaned_data['memberSearch']
+#            zipcode = zipSearch(zipcode=search)
+#            zipcode.save()
+            form = MemberSearch()
+        else:
+            search = ""
+    else:
+        form = MemberSearch()
+        search = "Texas"
     context = {
         'title':"Home",
-        'members':db.members.find({ 'state': "California"}),
+        'members':db.members.find({ 'state': search}),
         'bills': db.bills.find({ 'committees': "House - Natural Resources"}),
+        'form': form,
+        'search':search,
         "member_page":"/member_page",
     }
     return render(request,'home.html',context)
@@ -38,18 +53,17 @@ def members(request):
     member['members']=dumps(members)
     return HttpResponse(member['members'])
 
-def array(request):
-    cursor = db.members.find({'state':"California"})
-    member = {}
-    member['members']= []
-  #  obj = next(cursor, None)
-  #  if obj:
-    for obj in cursor:
-        member['members']+={
-            'member':obj['member'],
-            'state':obj['state'],
-        }
-    return JsonResponse(member)
+def bill_page(request):
+    bills = db.bills.find({'committees':request.GET['committee']})
+    bill = {}
+    bill['bills']=dumps(bills)
+    return HttpResponse(bill['bills'])
+
+def committees(request):
+    committees = db.committees.find({})
+    committee = {}
+    committee['committees']=dumps(committees)
+    return HttpResponse(committee['committees'])
 
 def register(request):
     if request.method == "POST":

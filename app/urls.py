@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'bills', views.bills, name='bills'),
     url(r'members', views.members, name='members'),
     url(r'member_page',views.member_page, name='member_page'),
-    url(r'array',views.array, name='array'),
+    url(r'bill_page',views.bill_page, name='bill_page'),
     url(r'register',views.register,name='register'),
+    url(r'committees',views.committees,name='committees')
 ]

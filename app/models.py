@@ -23,3 +23,8 @@ class Members(models.Model):
     def __str__(self):
         return self.member
 
+
+class zipSearch(models.Model):
+    zipcode = models.CharField(max_length=5)
+    def __str__(self):
+        return self.zipcode

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block head %}
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{% static "css/foundation.css" %}">
+<link rel="stylesheet" href="{% static "css/app.css" %}">
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+  <div class="text-center">
+    <h1>Woke</h1>
+  </div>
+</div>
+   <!-- creating a column for bills -->
+    <div class="text-center" id="bills">
+      <h4> Bills </h4>
+         <h5> Search By Committee </h5>
+          <li>
+         <ul class="menu">
+         <li><a class="button-round" href="/bills/?committee=House - Natural Resources">Natural Resources</a></li>
+         <li><a  class="button-round" href="/bills/?committee=House - Science, Space, and Technology">Science, Space, and Technology</a></li>
+         <li><a  class="button-round" href="/bills/?committee=House - Ways and Means">Ways and Means</a></li>
+         <li><a  class="button-round" href="/bills/?committee=House - Agriculture">Agriculture</a></li>
+         <li><a  class="button-round" href="/bills/?committee=House - Appropriations">Appropriations</a></li>
+         <li><a  class="button-round" href="/bills/?committee=House - Armed Services">Armed Services</a></li>
+         <li><a  class="button-round" href="/bills/?committee=House - Budget">Budget</a></li>
+         <li><a  class="button-round" href="/bills/?committee=House - Education and the Workforce">Education and the Workforce</a></li>
+         <li><a  class="button-round" href="/bills/?committee=House - Energy and Commerce">Energy and Commerce"</a></li>
+         <li><a  class="button-round" href="/bills/?committee=House - Ethics">Ethics</a></li>
+         <li><a  class="button-round" href="/bills/?committee=House - Oversight and Government Reform">Oversight and Government Reform</a></li>
+         <li><a  class="button-round" href="/bills/?committee=House - Rules">Rules</a></li>
+         <li><a  class="button-round" href="/bills/?committee=House - Small Business">Small Business</a></li>
+         <li><a  class="button-round" href="/bills/?committee=House - Transportation and Infrastructure">Transportation and Infrastructure</a></li>
+         <br>
+         <li><a  class="button-round" href="/bills/?committee=House - Veterans' Affairs">Veterans Affairs</a></li>
+         <li><a  class="button-round" href="/bills/?committee=Senate - Banking, Housing, and Urban Affairs">Banking, Housing, and Urban Affairs</a></li>
+         <li><a  class="button-round" href="/bills/?committee=Senate - Commerce, Science, and Transportation">Commerce, Science, and Transportation</a></li>
+         <li><a  class="button-round" href="/bills/?committee=Senate - Energy and Natural Resources">Energy</a></li>
+         <li><a  class="button-round" href="/bills/?committee=Senate - Environment and Public Works">Environment and Public Works</a></li>
+         <li><a  class="button-round" href="/bills/?committee=Senate - Finance">Finance</a></li>
+         <li><a  class="button-round" href="/bills/?committee=Senate - Foreign Relations">Foreign Relations</a></li>
+         <li><a  class="button-round" href="/bills/?committee=Senate - Health, Education, Labor, and Pensions">Health, Education, Labor, and Pensions</a></li>
+         <li><a  class="button-round" href="/bills/?committee=Senate - Homeland Security and Governmental Affairs">Homeland Secuirty and Governmental Affairs</a></li>
+         </ul>
+         </li>
+      <ul>
+        <!-- for each bill in the query which is currently committee of Natrual Resources -->
+        {% for bill in bills %}
+        <li>
+          <!-- use this for css so each bill will have a boarder -->
+          <article class="article-card">
+            <!-- display all the data for each bill. Not displaying text because its just not practical right now -->
+            {% for title in bill.billTitle %}
+            <h5 class="post-bill" ><a href='/text/?title={{title}}'>{{ title }}</a></h5>
+            {% endfor %}
+            {% for heading in bill.billHeading %}
+            <p>{{heading}}</p>
+            {% endfor %}
+            {% for committee in bill.committees %}
+            <p>{{committee}}</p>
+            {% endfor %}
+            {% for sponser in bill.sponser %}
+            <p>{{sponser}}</p>
+            {% endfor %}
+            {% for action in bill.latestAction %}
+            <p>{{action}}</p>
+            {% endfor %}
+          </article>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static "js/vendor/jquery.js" %}"></script>
+<script src="{% static "js/vendor/what-input.js" %}"></script>
+<script src="{% static "js/vendor/foundation.js" %}"></script>
+<script src="{% static "js/app.js" %}"></script>
+{% endblock %}

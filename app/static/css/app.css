@@ -15,6 +15,7 @@ ul {
   list-style-type:none;
 }
 .article-card {
+  text-align: center;
   border: 1px solid #d7d7d7;
   margin-bottom: 1.5rem;
   box-shadow: 2px 4px 5px 0px #d7d7d7; 
@@ -38,4 +39,7 @@ h4 {
   color: lightblue;
 }
 
-
+.button-round a {
+  margin: 100px;
+  padding: 10px;
+}

@@ -9,5 +9,8 @@ urlpatterns = [
     url(r'member_page',views.member_page, name='member_page'),
     url(r'bill_page',views.bill_page, name='bill_page'),
     url(r'register',views.register,name='register'),
-    url(r'committees',views.committees,name='committees')
+    url(r'committees',views.committees,name='committees'),
+    url(r'text',views.text,name='text'),
+    url(r'home',views.index, name='home'),
+    url(r'profile',views.profile, name='profile'),
 ]

@@ -45,9 +45,9 @@
              <h5 class="post-member">{{name}}</h5>
              {% endfor %}
 <!--"http://placehold.it/200x200"--> 
-              {% for suburl in  element.url  %}
+             {% for suburl in  element.url  %}
               <img class="thumbnail" id="memberImage" src="https://www.congress.gov{{suburl}}">
-              {% endfor %} 
+             {% endfor %} 
              {% for state in element.state %}
              <p>{{state}}</p>
              {% endfor %}
@@ -68,11 +68,37 @@
     <!-- creating a column for bills -->
     <div class="medium-5 small-4 columns" id="bills">
       <h4> Bills </h4>
-        <label>
-        Search
-        <textarea placeholder="Bill Name"></textarea>
-        </label>
-          <button class="button">Search</button>
+      <ul class="dropdown menu" data-dropdown-menu>
+         <h5> Search By Committee </h5>
+          <li>
+           <a href="#">Search By Committee</a>
+         <ul class="menu">
+         <li><a class="button round" href="?committee=House - Natural Resources">Natural Resources</a></li>
+         <li><a  class="button round" href="/?committee=House - Science, Space, and Technology">Science, Space, and Technology</a></li>
+         <li><a  class="button round" href="/?committee=House - Ways and Means">Ways and Means</a></li>
+         <li><a  class="button round" href="/?committee=House - Agriculture">Agriculture</a></li>
+         <li><a  class="button round" href="/?committee=House - Appropriations">Appropriations</a></li>
+         <li><a  class="button round" href="/?committee=House - Armed Services">Armed Services</a></li>
+         <li><a  class="button round" href="/?committee=House - Budget">Budget</a></li>
+         <li><a  class="button round" href="/?committee=House - Education and the Workforce">Education and the Workforce</a></li>
+         <li><a  class="button round" href="/?committee=House - Energy and Commerce">Energy and Commerce"</a></li>
+         <li><a  class="button round" href="/?committee=House - Ethics">Ethics</a></li>
+         <li><a  class="button round" href="/?committee=House - Oversight and Government Reform">Oversight and Government Reform</a></li>
+         <li><a  class="button round" href="/?committee=House - Rules">Rules</a></li>
+         <li><a  class="button round" href="/?committee=House - Small Business">Small Business</a></li>
+         <li><a  class="button round" href="/?committee=House - Transportation and Infrastructure">Transportation and Infrastructure</a></li>
+         <li><a  class="button round" href="/?committee=House - Veterans' Affairs">Veterans Affairs</a></li>
+         <li><a  class="button round" href="/?committee=Senate - Banking, Housing, and Urban Affairs">Banking, Housing, and Urban Affairs</a></li>
+         <li><a  class="button round" href="/?committee=Senate - Commerce, Science, and Transportation">Commerce, Science, and Transportation</a></li>
+         <li><a  class="button round" href="/?committee=Senate - Energy and Natural Resources">Energy</a></li>
+         <li><a  class="button round" href="/?committee=Senate - Environment and Public Works">Environment and Public Works</a></li>
+         <li><a  class="button round" href="/?committee=Senate - Finance">Finance</a></li>
+         <li><a  class="button round" href="/?committee=Senate - Foreign Relations">Foreign Relations</a></li>
+         <li><a  class="button round" href="/?committee=Senate - Health, Education, Labor, and Pensions">Health, Education, Labor, and Pensions</a></li>
+         <li><a  class="button round" href="/?committee=Senate - Homeland Security and Governmental Affairs">Homeland Secuirty and Governmental Affairs</a></li>
+         </ul>
+         </li>
+      </ul>
       <ul>
         <!-- for each bill in the query which is currently committee of Natrual Resources -->
         {% for bill in bills %}
@@ -81,7 +107,7 @@
           <article class="article-card">
             <!-- display all the data for each bill. Not displaying text because its just not practical right now -->
             {% for title in bill.billTitle %}
-            <h5 class="post-bill">{{ title }}</h5>
+            <h5 class="post-bill" ><a href='/text/?title={{title}}'>{{ title }}</a></h5>
             {% endfor %}
             {% for heading in bill.billHeading %}
             <p>{{heading}}</p>

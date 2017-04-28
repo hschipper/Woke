@@ -17,34 +17,78 @@ db = client.congress
 def index(request):
     if request.method == 'POST':
         form = MemberSearch(request.POST)
+        committee = "House - Natural Resources"
         if form.is_valid():
-#            zipcode = request.POST.get('search', None)
             search = form.cleaned_data['memberSearch']
-#            zipcode = zipSearch(zipcode=search)
-#            zipcode.save()
             form = MemberSearch()
         else:
             search = ""
     else:
         form = MemberSearch()
-        search = "Texas"
+        if ('committee' in request.GET):
+            committee = request.GET['committee'] 
+        else:
+            committee = "House - Natural Resources"
+        if not request.user.is_authenticated():
+            search = "Texas"
+        else:
+            profile = Profile.objects.get(user = request.user)
+            if profile:
+                search = profile.state
+                committee = profile.committees
+
     context = {
         'title':"Home",
         'members':db.members.find({ 'state': search}),
-        'bills': db.bills.find({ 'committees': "House - Natural Resources"}),
+        'bills': db.bills.find({ 'committees': committee}),
         'form': form,
         'search':search,
-        "member_page":"/member_page",
+        "member_page":"/",
     }
     return render(request,'home.html',context)
+
+def profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            state = form.cleaned_data['state']
+            committee = form.cleaned_data['committees']
+            form = ProfileForm()
+            user = request.user
+            profile = Profile.objects.get(user = request.user)
+            profile.update(state, committee)
+
+    else:
+        form = ProfileForm()
+            
+    context = {
+        'title':"Settings",
+        'form': form,
+    }
+    return render(request,'my_profile.html',context)
+
+def text(request):
+    text = db.bills.find({'billTitle':request.GET['title']},{'billText':1})
+    context = {
+        'title': "bill text",
+        'billTitle':request.GET['title'],
+        'billText':text[0]['billText'],
+    }
+    return render(request,'text.html',context)
+
 
 #API for app
 @csrf_exempt
 def bills(request):
-    bills = db.bills.find({'committees':"House - Natural Resources"})
-    bill = {}
-    bill['bills']= dumps(bills)
-    return HttpResponse(bill['bills'])
+    if ('committee' in request.GET):
+        committee = request.GET['committee']    
+    else:
+        committee = "House - Natural Resources"
+    context = {
+        'title': "bills",
+        'bills': db.bills.find({ 'committees': committee }),
+    }
+    return render(request,'bills.html',context)
 
 #API for app
 def members(request):
@@ -68,17 +112,22 @@ def committees(request):
 def register(request):
     if request.method == "POST":
         form = registration_form(request.POST)
-        if form.is_valid():
+        form2 = ProfileForm(request.POST)
+        if form.is_valid() and form2.is_valid():
             user = form.save()
+            profile = Profile.create(form2.cleaned_data['state'],form2.cleaned_data['committees'],user)
             user = authenticate(
                 username=form.cleaned_data.get('username'),
                 password=form.cleaned_data.get('password1'))
+            profile.save()
             return HttpResponseRedirect('/')
     else:
         form = registration_form()
+        form2 = ProfileForm()
     context = {
         'title':'Register',
-        'form':form
+        'form':form,
+        'form2':form2
     }
     return render(request, 'register.html', context)
 

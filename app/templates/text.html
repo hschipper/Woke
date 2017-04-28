@@ -19,19 +19,13 @@
 <div class="row">
   <div class="text-center">
     <h1>Woke</h1>
-    <form method="post" action="{% url 'profile' %}">
-      {% csrf_token %}
-      <div class="row column settings-form">
-          <h4 class="text-center">Change Profile Settings</h4>
-          {{form.errors}}
-          <label>{{form.state.label_tag}}</label>
-            {{form.state}}
-          <label>Committee</label>
-            {{form.committees}}
-          <input type="submit" class="button expanded" value="Change">
-      </div>
-    </form>
   </div>
+</div>
+<div class="row center">
+    <div class="Large-6 small-6 Large-centered small-centered columns" id="bills">
+      <h4 class="center"> {{billTitle}} </h4>
+        <p>{{billText}}</p>
+    </div>
 </div>
 
 {% endblock %}

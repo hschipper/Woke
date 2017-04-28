@@ -1,5 +1,5 @@
 from django import forms
- 
+from app.models import Profile
  
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
@@ -43,3 +43,20 @@ class MemberSearch(forms.Form):
         widget=forms.TextInput({
             'placeholder': 'Texas'
             }))
+
+
+class ProfileForm(forms.ModelForm):
+    state = forms.CharField(
+        label="State",
+        max_length=30,
+        widget=forms.TextInput(attrs={
+            'class': 'Large-4 columns', 
+            }))
+    committees = forms.CharField(
+        label="committee",
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            }))
+    class Meta:
+        model = Profile
+        fields = ('state','committees')

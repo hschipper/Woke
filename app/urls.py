@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'text',views.text,name='text'),
     url(r'home',views.index, name='home'),
     url(r'profile',views.profile, name='profile'),
+    url(r'hot',views.hot,name='hot'),
 ]

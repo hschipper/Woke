@@ -17,7 +17,7 @@ db = client.congress
 def index(request):
     if request.method == 'POST':
         form = MemberSearch(request.POST)
-        committee = "House - Natural Resources"
+        committee = ""
         if form.is_valid():
             search = form.cleaned_data['memberSearch']
             form = MemberSearch()
@@ -25,10 +25,7 @@ def index(request):
             search = ""
     else:
         form = MemberSearch()
-        if ('committee' in request.GET):
-            committee = request.GET['committee'] 
-        else:
-            committee = "House - Natural Resources"
+        committee = ""
         if not request.user.is_authenticated():
             search = "Texas"
         else:
@@ -36,11 +33,11 @@ def index(request):
             if profile:
                 search = profile.state
                 committee = profile.committees
-
     context = {
         'title':"Home",
         'members':db.members.find({ 'state': search}),
         'bills': db.bills.find({ 'committees': committee}),
+        'hot':db.hotbills.find({}),
         'form': form,
         'search':search,
         "member_page":"/",
@@ -76,6 +73,14 @@ def text(request):
     }
     return render(request,'text.html',context)
 
+def hot(request):
+    text = db.hotbills.find({'billTitle':request.GET['title']},{'billText':1})
+    context = {
+        'title': "hot bill text",
+        'billTitle':request.GET['title'],
+        'billText':text[0]['billText'],
+    }
+    return render(request,'text.html',context)
 
 #API for app
 @csrf_exempt

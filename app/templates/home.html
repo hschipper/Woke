@@ -22,8 +22,27 @@
   </div>
 </div>
 <div class="row">
+    <div class= "medium-4 small-4 columns" >
+       <h4> Hot Topics </h4>
+       <ul>
+        <!-- for each bill in the query which is currently committee of Natrual Resources -->
+        {% for h in hot %}
+        <li>
+          <!-- use this for css so each bill will have a boarder -->
+          <article class="article-card">
+            <!-- display all the data for each bill. Not displaying text because its just not practical right now -->
+            <h5 class="post-bill" ><a href='/hot/?title={{h.billTitle}}'>{{ h.billTitle }}</a></h5>
+            <p>{{h.committee}}</p>
+            <p>{{h.sponser}}</p>
+            <p>{{h.latestAction}}</p>
+          </article>
+        </li>
+        {% endfor %}
+      </ul>
+ 
+    </div>
     <!-- creating a column for congress memebers -->
-    <div class= "medium-5 small-4 columns">
+    <div class= "medium-4 small-4 columns">
       <h4> Members </h4>
          <form action"" method="post">
          {% csrf_token %}
@@ -66,8 +85,9 @@
      </ul>
     </div>
     <!-- creating a column for bills -->
-    <div class="medium-5 small-4 columns" id="bills">
-      <h4> Bills </h4>
+    <div class="medium-4 small-4 columns" id="bills">
+      {% if user.is_authenticated %}
+      <h4> Bills you may be interested in </h4>
       <ul class="dropdown menu" data-dropdown-menu>
          <h5> Search By Committee </h5>
           <li>
@@ -125,7 +145,16 @@
         </li>
         {% endfor %}
       </ul>
+      {% else %}
+        <h4> Log in to customize home page </h4>
+          <article class="article-card">
+              <p> See your interests here </p>
+              <br>
+              <p> Get the app!! </p>
+          </article>
+      {% endif %}
     </div>
+    
 </div>
 
 {% endblock %}

@@ -102,12 +102,14 @@ def members(request):
     member['members']=dumps(members)
     return HttpResponse(member['members'])
 
+
+#this function is for capstone
 def bill_page(request):
     bills = db.bills.find({'committees':request.GET['committee']})
     bill = {}
     bill['bills']=dumps(bills)
     return HttpResponse(bill['bills'])
-
+#this function is for capstone
 def committees(request):
     committees = db.committees.find({})
     committee = {}
@@ -139,8 +141,15 @@ def register(request):
 
 
 #second page to display members different.
+#this function is for capstone
 def member_page(request):
     members = db.members.find({'state':request.GET['state']})
     member = {}
     member['members']=dumps(members)
     return HttpResponse(member['members'])
+#this function is for capstone
+def bill_details(request):
+    bills = db.bills.find({'billTitle':request.GET['title']},{'billText':1})
+    bill = {}
+    bill['bills']=dumps(bills)
+    return HttpResponse(bill['bills'])

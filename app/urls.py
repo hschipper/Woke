@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'home',views.index, name='home'),
     url(r'profile',views.profile, name='profile'),
     url(r'hot',views.hot,name='hot'),
+    url(r'bill_details', views.bill_details, name='bill_details'),
 ]
